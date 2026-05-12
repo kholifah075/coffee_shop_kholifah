@@ -1,3 +1,4 @@
+import { saveToken } from '@/config/storage';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import {
@@ -37,6 +38,7 @@ export default function HomeScreen() {
   };
 
   const toCart = () => {
+    saveToken('item',JSON.stringify(cart) )
     router.push({
       pathname: '/cart',
       params: {

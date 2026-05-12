@@ -1,3 +1,4 @@
+import { deleteToken, getToken } from '@/config/storage';
 import useAuthGuard from '@/config/useAuthGuard';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useState } from 'react';
@@ -21,28 +22,17 @@ interface CartItem {
 
 /* ================= DATA AWAL ================= */
 const initialCart: CartItem[] = [
-  {
-    id: 1,
-    name: 'Latte',
-    price: 25000,
-    qty: 1,
-    selected: false,
-  },
-  {
-    id: 2,
-    name: 'Burger',
-    price: 35000,
-    qty: 1,
-    selected: false,
-  },
-  
+
 ];
 
 /* ================= MAIN ================= */
 export default function CartScreen() {
   const router = useRouter();
   const { data } = useLocalSearchParams();
-  const [cart, setCart] = useState<CartItem[]>(data ? JSON.parse(data as string) : initialCart);
+  const items = getToken('item')
+  console.log(items);
+  
+  const [cart, setCart] = useState<CartItem[]>(data ? JSON.parse(data as string) : JSON.parse(items));
   const loading = useAuthGuard();
   if (loading) return null; 
 
@@ -72,12 +62,21 @@ export default function CartScreen() {
   const total = cart
     .filter((item) => item.selected)
     .reduce((sum, item) => sum + item.price * item.qty, 0);
-
+const Logout=()=>{
+  deleteToken('accessToken')
+  router.replace('/')
+}
   /* ================= UI ================= */
 
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.header}>🛒 Detail Pesanan </Text>
+      <TouchableOpacity
+  style={styles.logoutButton}
+  onPress={() => Logout()}
+>
+  <Text style={styles.logoutText}>Logout</Text>
+</TouchableOpacity>
 
       <ScrollView
         showsVerticalScrollIndicator={true}
@@ -267,4 +266,31 @@ const styles = StyleSheet.create({
 
     elevation: 4,
   },
+  /* BUTTON LOGOUT */
+logoutButton: {
+  alignSelf: 'flex-end',
+  marginRight: 20,
+  marginBottom: 10,
+
+  backgroundColor: '#8D6E63',
+  paddingVertical: 10,
+  paddingHorizontal: 18,
+  borderRadius: 14,
+
+  shadowColor: '#000',
+  shadowOffset: {
+    width: 0,
+    height: 2,
+  },
+  shadowOpacity: 0.15,
+  shadowRadius: 3,
+
+  elevation: 3,
+},
+
+logoutText: {
+  color: '#fff',
+  fontSize: 15,
+  fontWeight: 'bold',
+},
 });
