@@ -1,3 +1,4 @@
+import useAuthGuard from '@/config/useAuthGuard';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
@@ -42,6 +43,8 @@ export default function CartScreen() {
   const router = useRouter();
   const { data } = useLocalSearchParams();
   const [cart, setCart] = useState<CartItem[]>(data ? JSON.parse(data as string) : initialCart);
+  const loading = useAuthGuard();
+  if (loading) return null; 
 
   /* ================= ACTION ================= */
 
@@ -74,7 +77,7 @@ export default function CartScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.header}>🛒 Detail Pesananan </Text>
+      <Text style={styles.header}>🛒 Detail Pesanan </Text>
 
       <ScrollView
         showsVerticalScrollIndicator={true}

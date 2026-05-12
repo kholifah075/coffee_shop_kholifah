@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 50,
     fontWeight: 'bold',
-    color: '#8B5E3C',
+    color: '#8f5427',
     lineHeight: 55,
   },
 
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   discountText: {
     fontSize: 30,
     fontWeight: 'bold',
-    color: '#A56A43',
+    color: '#6D4C41',
   },
 
   image: {
@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     alignSelf: 'center',
     marginTop: 30,
+    marginBottom: 50,
   },
 
   orderButton: {
@@ -120,7 +121,7 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     alignItems: 'center',
     marginTop: 20,
-    marginBottom: 70,
+    marginBottom: 50,
   },
 
   orderText: {
@@ -132,8 +133,7 @@ const styles = StyleSheet.create({
   textAlign: 'center',
   marginTop: 18,
   fontSize: 14,
-  color: '#e7805b',
+  color: '#8f5427',
   fontStyle: 'italic',
-  marginBottom: 50,
 },
 });
