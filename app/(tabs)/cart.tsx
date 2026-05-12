@@ -29,9 +29,8 @@ const initialCart: CartItem[] = [
 export default function CartScreen() {
   const router = useRouter();
   const { data } = useLocalSearchParams();
-  const items = getToken('item')
+  const items = getToken('item')?? '[]'
   console.log(items);
-  
   const [cart, setCart] = useState<CartItem[]>(data ? JSON.parse(data as string) : JSON.parse(items));
   const loading = useAuthGuard();
   if (loading) return null; 
