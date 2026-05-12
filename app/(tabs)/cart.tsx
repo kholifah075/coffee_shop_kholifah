@@ -68,6 +68,7 @@ export default function CartScreen() {
   const total = cart
     .filter((item) => item.selected)
     .reduce((sum, item) => sum + item.price * item.qty, 0);
+    
 const Logout=()=>{
   deleteToken('accessToken')
   router.replace('/')
