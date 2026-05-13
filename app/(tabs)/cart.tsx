@@ -1,7 +1,7 @@
 import { deleteToken, getToken } from '@/config/storage';
 import useAuthGuard from '@/config/useAuthGuard';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -31,12 +31,16 @@ export default function CartScreen() {
   const { data } = useLocalSearchParams();
   const [cart, setCart] = useState<CartItem[]>(data ? JSON.parse(data as string) : initialCart);
 
-  setTimeout(async () => {
-    if(!data) {
-      const items = await getToken('item')?? '[]';
-      setCart(JSON.parse(items));
+  useEffect(() => {
+    if (!data) {
+      const loadCart = async () => {
+        const items = (await getToken('item')) ?? '[]';
+        setCart(JSON.parse(items));
+      };
+
+      loadCart();
     }
-  }, 1000);
+  }, []);
 
   const loading = useAuthGuard();
   if (loading) return null; 
